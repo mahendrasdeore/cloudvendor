@@ -36,6 +36,8 @@ public class CloudVendorServiceImpl implements CloudvendorService {
 		}
 		return clouddata;
 		
+		//biolarplate code
+		
 	}
 
 	@Override
