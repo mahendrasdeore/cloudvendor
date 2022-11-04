@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class CloudVendorNotFoundException{
 	
+	//global exception handler
 	
 	@ExceptionHandler(NoSuchElementException.class)
 	public ResponseEntity<ExceptionApi> cloudException(NoSuchElementException ex){

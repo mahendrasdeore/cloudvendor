@@ -25,6 +25,7 @@ public class CloudVendorController {
 	@Autowired
 	CloudvendorService cvservice;
 	
+	// controller logic
 	
 	@PostMapping("/createvendor")
 	public ResponseEntity<CloudVendor> createCloudVendor(@RequestBody CloudVendor vendordata) {

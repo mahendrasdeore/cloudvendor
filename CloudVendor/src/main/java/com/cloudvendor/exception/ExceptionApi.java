@@ -8,6 +8,7 @@ public class ExceptionApi {
 	private boolean value;
 	
 
+	// for global exception
 	public ExceptionApi(String message, boolean value) {
 		super();
 		this.message = message;

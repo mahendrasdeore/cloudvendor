@@ -18,7 +18,8 @@ public class CloudVendorServiceImpl implements CloudvendorService {
 	@Autowired
 	CloudVendorRepository cvrepo;
 	
-
+	//business logic
+	
 	@Override
 	public CloudVendor createCloudVendor(CloudVendor vendordata) {
 		CloudVendor clouddata = cvrepo.save(vendordata);
@@ -57,6 +58,7 @@ public class CloudVendorServiceImpl implements CloudvendorService {
 
 	}
 
+	// method for deleteedcloudvendor
 	@Override
 	public String deleteCloudVendor(Integer vendorid) {
 		cvrepo.findById(vendorid).orElseThrow(()-> new NoSuchElementException("No such value present in database"));;
