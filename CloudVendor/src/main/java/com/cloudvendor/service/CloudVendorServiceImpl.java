@@ -1,10 +1,12 @@
 package com.cloudvendor.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.cloudvendor.model.CloudVendor;
@@ -27,26 +29,23 @@ public class CloudVendorServiceImpl implements CloudvendorService {
 	@Override
 	public CloudVendor updateCloudVendor(Integer cloudid,CloudVendor vendordata) {
 		
-		CloudVendor clouddata = cvrepo.findById(cloudid).get();
-		if(clouddata!=null) {
+		CloudVendor clouddata = cvrepo.findById(cloudid).orElseThrow(()-> new NoSuchElementException("No such value present in database"));;
+		
 			clouddata.setVendorName(vendordata.getVendorName());
 			clouddata.setVendorAddress(vendordata.getVendorAddress());
 			clouddata.setPh_no(vendordata.getPh_no());
 			cvrepo.save(clouddata);
-		}
-		return clouddata;
+			return clouddata;
 		
 	}
 
 	@Override
 	public CloudVendor getCloudVendor(Integer vendorid) {
-		Optional<CloudVendor> cvdata = cvrepo.findById(vendorid);
-		if(!cvdata.isEmpty()) {
-			return cvdata.get();
-		}
+		CloudVendor cvdata = cvrepo.findById(vendorid).orElseThrow(()-> new NoSuchElementException("No such value present in database"));
 		
-		return null;
+		return cvdata;
 	}
+
 
 	@Override
 	public List<CloudVendor> getAllCloudVendor() {
@@ -60,12 +59,10 @@ public class CloudVendorServiceImpl implements CloudvendorService {
 
 	@Override
 	public String deleteCloudVendor(Integer vendorid) {
-		Optional<CloudVendor> cvdata = cvrepo.findById(vendorid);
-		if(!cvdata.isEmpty()) {
+		cvrepo.findById(vendorid).orElseThrow(()-> new NoSuchElementException("No such value present in database"));;
+		
 		cvrepo.deleteById(vendorid);
 		return "vendor has been deleted";
-		}
-		return " cloud vendor not found";
 		
 	}
 

@@ -1,7 +1,11 @@
 package com.cloudvendor.controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,49 +16,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cloudvendor.model.CloudVendor;
+import com.cloudvendor.service.CloudvendorService;
 
 @RestController
 @RequestMapping("/cloudvendor")
 public class CloudVendorController {
 	
+	@Autowired
+	CloudvendorService cvservice;
+	
+	
 	@PostMapping("/createvendor")
-	public String createAllCloudVendor(@RequestBody CloudVendor vendordata) {
+	public ResponseEntity<CloudVendor> createCloudVendor(@RequestBody CloudVendor vendordata) {
 		
-		System.out.println(vendordata.getVendorName()+" "+
-							vendordata.getVendorAddress()+"  "+vendordata.getPh_no());
-		
-	ArrayList<CloudVendor>list=new ArrayList<>();
-			list.add(vendordata);
-	if(!list.isEmpty()) {
-	
-	return "cloudvendor has been succefully created" ;
-	}else {
-		return "cloudvendor not been created" ;
-	}
+		return ResponseEntity.ok(cvservice.createCloudVendor(vendordata));
 	}
 	
-	@GetMapping("/getvendorid/{getid}")
-	public CloudVendor getCloudVendorDetails(@PathVariable("getid") Integer vid) {
+	@GetMapping("/getvendor/{getid}")
+	public  ResponseEntity<CloudVendor> getCloudVendorDetails(@PathVariable("getid") Integer vid) {
 		
-		System.out.println("cloud vendor id"+vid);
-		
-		return null;
-		
+		return ResponseEntity.ok(cvservice.getCloudVendor(vid));		
 	}
 	
-	@PutMapping("/updatevendor")
-	public String updateCloudVendor(@RequestBody CloudVendor vendordata) {
+	@GetMapping("/getAllvendor")
+	public ResponseEntity<List<CloudVendor>> getAllCloudVendor(){
 		
-		System.out.println(vendordata.getVendorName()+" "+
-							vendordata.getVendorAddress()+"  "+vendordata.getPh_no());
+		return ResponseEntity.ok(cvservice.getAllCloudVendor());		
+	}
+	@PutMapping("/updatevendor/{vendorid}")
+	public ResponseEntity<CloudVendor> updateCloudVendor(@RequestBody CloudVendor vendordata,@PathVariable("vendorid") Integer vendorid) {
 		
-	return" vendor data updated";	
+	return ResponseEntity.ok(cvservice.updateCloudVendor(vendorid, vendordata));	
 	}
 	
 	@DeleteMapping("/deletevendor/{vendorid}")
-	public String deleteVendor(@PathVariable Integer vendorid) {
+	public ResponseEntity<String> deleteVendor(@PathVariable Integer vendorid) {
 		
-		return "vendor has been deleted";
+		return ResponseEntity.ok(cvservice.deleteCloudVendor(vendorid));
 		
 	}
 	
